@@ -36,6 +36,14 @@ body {
     margin-bottom: 0px;
 }
 
+.top_label h2 {
+    font-size: 2em;
+}
+
+.top_label p {
+    font-size: 0.9em !important;
+}
+
 .top_label.description {
     font-size: 20px;
     margin-top: 10px;

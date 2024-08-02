@@ -115,3 +115,12 @@ label {
   font-family: 'JetBrainsMonoRegular', sans-serif;
   color: #d2d0d0 !important;
 }
+
+/* .table-responsive .row:nth-of-type(1) {
+  background-color: red;
+} */
+
+.table-responsive .row:nth-of-type(1) > div {
+  width: 50%;
+  display: flex;
+}
