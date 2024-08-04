@@ -44,49 +44,62 @@ body {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     display: flex;
     align-items: center;
-    padding: 20px;
     background-color: linear-gradient(#141e30, #243b55);
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 50px;
 }
+
 .description-image {
-    max-width: 250px;
-    margin-right: 20px;
+    max-width: 200px;
+    margin-right: 20px !important;
 }
 .description-text {
     color: #d2d0d0;
 }
 .description-text h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    /* margin-bottom: 10px; */
     color: #03e9f4;
 }
 .description-text p {
-    font-size: 18px;
+    font-size: 14px;
     line-height: 1.5;
 }
 
+
+.form-title {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    color: #03e9f4;
+    text-align: center;
+}
+
+
+.btn.btn-primary {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    background: linear-gradient(#141e30, #243b55);
+    color: #03e9f4;
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 40px;
+    border: 0px;
+    vertical-align: middle;
+    width: 150px;
+}
+
+.btn.btn-primary:hover {
+    color: #141e30 !important;
+    background: #03e9f4;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #03e9f4,
+        0 0 5px #03e9f4,
+        0 0 10px #03e9f4,
+        0 0 15px #03e9f4;
+}
+
 .contact-form .form-control{
+    font-family: 'JetBrainsMonoRegular', sans-serif;
     border-radius:1rem;
-}
-.contact-image{
-    display: inline-block; 
-    flex-direction: column;
-    align-items: center;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 0%;
-
-}
-
-.contact-image img{
-    border-radius: 6rem;
-    width: 400px;
-    height: 450px;
-    margin-top: 50px;
-    margin-bottom: 0px;
 }
 
 .contact-form form h3 {
@@ -126,8 +139,8 @@ body {
     color: #fff;
     cursor: pointer;
 }
-.btnContactSubmit
-{
+
+.btnContactSubmit {
     width: 50%;
     border-radius: 1rem;
     padding: 1.5%;

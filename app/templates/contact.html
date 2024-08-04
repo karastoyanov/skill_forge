@@ -16,18 +16,19 @@
     <script src="{{ url_for('static', filename='js/websocket.js') }}"></script>
 </head>
 
-<body>
+<body class="bg-gradient-to-b from-gray-800 to-gray-900 min-h-screen flex flex-col">
     <!-- Include Navbar template -->
     {% include 'navbar.html' %}
-    <div class="description-container">
-        <div class="description-text">
-            <h2>Get in touch with us!</h2>
-            <p>You have a question? You want to report a bug or propose a new feature or just want to share your feedback with us?
+    
+    <div class="description-container flex items-center mr-5 ml-12">
+        <div class="description-text text-gray-300">
+            <h2 class="text-2xl mb-2 text-cyan-400">Get in touch with us!</h2>
+            <p class="text-lg mb-2">You have a question? You want to report a bug or propose a new feature or just want to share your feedback with us?
                 We would love to hear from you! Please fill out the form below and we will get back to you as soon as possible.
             </p>
 
         </div>
-        <img src="{{ url_for('static', filename='images/dwarf_avatar.png') }}" alt="dwarf" class="description-image"/>
+        <img src="{{ url_for('static', filename='images/dwarf_avatar.png') }}" alt="dwarf" class="description-image ml-4"/>
     </div>
 
 
@@ -43,7 +44,7 @@
         {% endwith %}
         <form method="post" action="{{ url_for('main.send_message') }}">
             {{ form.hidden_tag() }}
-            <h3>Drop Us a Message</h3>
+            <h3 class='form-title'>Drop Us a Message</h3>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">

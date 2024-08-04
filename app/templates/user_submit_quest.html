@@ -31,20 +31,20 @@
     {% endif %}
     {% endwith %}
 
-    <div class="description-container">
-        <div class="description-text">
-            <h2>Submit a Quest</h2>
-            <p>Got a great idea for a new quest? Share it with our community! Submitting a quest is easy and helps others learn and grow. 
+    <div class="description-container flex items-center mr-5 ml-12">
+        <div class="description-text text-gray-300">
+            <h2 class="text-2xl mb-2 text-cyan-400">Submit a Quest</h2>
+            <p class="text-lg mb-2">Got a great idea for a new quest? Share it with our community! Submitting a quest is easy and helps others learn and grow. 
                 Once your quest is submited, administrator will review it and will send you a feedback if the quest is being approved or 
                 additional changes are required.</p>
-            <h2>Instructions</h2>
-            <li>Quest Name: Unique and creative name for your quest, but keep in mind that the name should be related to the quest.</li>
-            <li>Quest Language: Choose the programming language for your quest.</li>
-            <li>Quest Difficulty: How difficult is your quest. Choose wisely.</li>
-            <li>Quest Condition: Describe the quest condition in a few sentences. What is the goal of the quest? What is the problem?</li>
-            <li>Example Solution: Provide an example solution of your quest.</li>
-            <li>Inputs Samples: Provide example inputs for the function in format: [input arguments] [ input arguments] separated each on a new line.</li>
-            <li>Outputs Samples: Provide expected outputs from the function in the same order as the inputs in format: [output] [output] separated each on a new line.</li>
+            <h2 class="text-2xl mb-2 text-cyan-400">Instructions</h2>
+            <li class="text-sm mb-2">Quest Name: Unique and creative name for your quest, but keep in mind that the name should be related to the quest.</li>
+            <li class="text-sm mb-2">Quest Language: Choose the programming language for your quest.</li>
+            <li class="text-sm mb-2">Quest Difficulty: How difficult is your quest. Choose wisely.</li>
+            <li class="text-sm mb-2">Quest Condition: Describe the quest condition in a few sentences. What is the goal of the quest? What is the problem?</li>
+            <li class="text-sm mb-2">Example Solution: Provide an example solution of your quest.</li>
+            <li class="text-sm mb-2">Inputs Samples: Provide example inputs for the function in format: [input arguments] [ input arguments] separated each on a new line.</li>
+            <li class="text-sm mb-2">Outputs Samples: Provide expected outputs from the function in the same order as the inputs in format: [output] [output] separated each on a new line.</li>
         </div>
         <img src="{{ url_for('static', filename='images/quest_submiter_avatar.png') }}" alt="Coding Avatar" class="description-image">
     </div>

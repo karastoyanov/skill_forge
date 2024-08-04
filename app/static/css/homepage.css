@@ -46,6 +46,7 @@ body {
     align-items: center;
     background-color: linear-gradient(#141e30, #243b55);
 }
+
 .description-image {
     max-width: 300px;
     margin-right: 20px !important;

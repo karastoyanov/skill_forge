@@ -52,28 +52,27 @@ body {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     display: flex;
     align-items: center;
-    padding: 20px;
     background-color: linear-gradient(#141e30, #243b55);
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 50px;
 }
+
 .description-image {
-    max-width: 350px;
-    margin-right: 20px;
+    max-width: 200px;
+    margin-right: 20px !important;
 }
 .description-text {
     color: #d2d0d0;
 }
 .description-text h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    /* margin-bottom: 10px; */
     color: #03e9f4;
 }
 .description-text p {
-    font-size: 18px;
+    font-size: 14px;
     line-height: 1.5;
 }
+
+
 .submit-quest-container {
     display: flex;
     align-items: center;

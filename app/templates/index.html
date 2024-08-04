@@ -34,7 +34,7 @@
                         <form class="user-box input" method="post" action="{{ url_for('main.login') }}">
                             {{ form.hidden_tag() }}
                             <div class="form-group">
-                                {{ form.username(class="form-control user-box input", placeholder="Username", id="inputUsername") }}
+                                {{ form.username(class="form-control user-box input", placeholder="Username or Email", id="inputUsername") }}
                             </div>
                             <div class="form-group">
                                 {{ form.password(class="form-control user-box input", placeholder="Password", id="inputPassword") }}
