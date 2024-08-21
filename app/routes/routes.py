@@ -1,4 +1,4 @@
-import secrets, os
+import secrets, os, base64
 from datetime import datetime, timedelta
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
@@ -204,6 +204,8 @@ def main_page():
     online_users = User.query.filter_by(user_online_status='Online').count()
     online_users_query = User.query.filter_by(user_online_status="Online").all()
     user_guild = current_user.guild_id
+    guild_avatar = current_user.guild.guild_avatar
+    guild_avatar_base64 = base64.b64encode(guild_avatar).decode('utf-8')
     quest_count = Quest.query.count()
     solutions_count = SubmitedSolution.query.filter_by(quest_passed=True).count()
     server_time = datetime.now()
@@ -212,6 +214,7 @@ def main_page():
                            user_count=user_count,
                            online_users=online_users,
                            user_guild=user_guild,
+                           guild_avatar=guild_avatar_base64,
                            quest_count=quest_count,
                            solutions_count=solutions_count)
 

@@ -80,11 +80,15 @@
                         <div class="guild_button" onclick=location.href="{{ url_for('guilds.open_guilds_list') }}">Join Guild</div>
                     </div>
                     {% else %}
-                    <a href="{{ url_for('guilds.open_guild', guild_id=user_guild) }}" class="mb-2 text-base">
-                        {{ current_user.guild.guild_name }}
-                    </a>
-                    <p class="mb-2 text-base">Members: {{ current_user.guild.guild_members_count }}</p>
-                    <p class="mb-2 text-base">Guild Master: {{ current_user.guild.guild_master.username }}</p>
+                    <div class="flex space-x-2">
+                        <img class="w-20 h-20 p-1 rounded-full ring-2 ring-blue-300" src="data:image/png;base64,{{ guild_avatar }}" alt="Guild Avatar">
+                        <div>
+                            <a href="{{ url_for('guilds.open_guild', guild_id=user_guild) }}" class="mb-2 text-blue-300" style="text-decoration: none !important;">
+                                {{ current_user.guild.guild_name }}
+                            </a>
+                            <p class="mb-2 text-base">Level: {{ current_user.guild.level }}</p>
+                        </div>
+                    </div>
                     {% endif %}
                 </div>
             </div>
