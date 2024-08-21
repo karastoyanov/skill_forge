@@ -18,19 +18,36 @@ html {
 body {
     flex-direction: column;
     font-family: 'JetBrainsMonoRegular', sans-serif;
-    background: linear-gradient(#141e30, #243b55) !important;
+    background: linear-gradient(#141e30, #243b55);
     background-size: cover;
     background-position: repeat;
     align-items: center;
     justify-content: center;
 }
 
-.guild_card {
-    background: rgba(0, 0, 0, .5) !important;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
-    color: #03e9f4 !important;
+.title {
+    color: #03e9f4;
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+
 }
 
+.guild_card {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guild_title {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    color: #03e9f4;
+}
+
+.guild_details {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    color: #03e9f4;
+}
 /* Avatar styling */
 .guild_avatar {
     position: relative;

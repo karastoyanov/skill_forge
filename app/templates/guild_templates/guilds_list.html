@@ -22,23 +22,25 @@
 <body>
     <!-- Include Navbar template -->
     {% include 'navbar.html' %}
-    <div class="main_container min-h-screen flex items-center justify-center main-container">
-        <section id="our-team" class="py-32">
+    <!-- Main Container -->
+    <div class="main_container min-h-screen items-center justify-center main-container">
+        <section class="py-0">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-8 text-primary">Guild list</h2>
-    
+                <h2 class="text-3xl font-bold text-center mb-4 mt-4 title">Guild list</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {% for guild in guilds %}
-                    <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center guild_card">
-                        <img src="{{ url_for('guilds.get_guild_avatar', guild_id=guild.guild_id) }}" alt="Guild Avatar" class="w-full rounded-full mb-4">
-                        <h3 class="text-xl font-semibold mb-2">{{ guild.guild_name }}</h3>
+                    <div class="rounded-lg shadow-md py-4 px-2 my-4 text-center content-center guild_card">
+                        <div class="flex justify-center">
+                            <img src="{{ url_for('guilds.get_guild_avatar', guild_id=guild.guild_id) }}" alt="Guild Avatar" class="w-1/2 rounded-full mb-4">
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2 guild_title">{{ guild.guild_name }}</h3>
                         <p class="text-gray-400 mb-10">{{ guild.description }}</p>
-                        <p class="text-gray-400">Guild Master: {{ guild.guild_master.username }}</p>
-                        <p class="text-gray-400">Guild Level: {{ guild.level }}</p>
-                        <p class="text-gray-400">Guild Points: {{ guild.points }}</p>
-                        <p class="text-gray-400">Dungeons Completed: {{ guild.dungeons_completed }}</p>
-                        <p class="text-gray-400">Members: {{ guild.guild_members_count }}</p>
-                        <button onclick=location.href="{{ url_for('guilds.get_guild_info', guild_id=guild.guild_id) }}">Details</button>
+                        <p class="text-gray-400 m-1">Guild Master: {{ guild.guild_master.username }}</p>
+                        <p class="text-gray-400 m-1">Guild Level: {{ guild.level }}</p>
+                        <p class="text-gray-400 m-1">Guild Points: {{ guild.points }}</p>
+                        <p class="text-gray-400 m-1">Dungeons Completed: {{ guild.dungeons_completed }}</p>
+                        <p class="text-gray-400 m-1">Members: {{ guild.guild_members_count }}</p>
+                        <button class="mt-4 guild_details" onclick=location.href="{{ url_for('guilds.get_guild_info', guild_id=guild.guild_id) }}">Details</button>
                     </div>
                     {% endfor %}
                 </div>
@@ -52,8 +54,4 @@
         <!-- Include Footer template -->
         {% include 'footer.html' %}
     </footer>
-    <!-- JavaScript managing the content in the Bootstrap table -->
-    <script src="{{ url_for('static', filename='js/questsTable.js') }}"></script>
-
-
 </body>

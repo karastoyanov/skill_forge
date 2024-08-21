@@ -204,8 +204,10 @@ def main_page():
     online_users = User.query.filter_by(user_online_status='Online').count()
     online_users_query = User.query.filter_by(user_online_status="Online").all()
     user_guild = current_user.guild_id
-    guild_avatar = current_user.guild.guild_avatar
-    guild_avatar_base64 = base64.b64encode(guild_avatar).decode('utf-8')
+    if user_guild:
+        guild_avatar_base64 = base64.b64encode(current_user.guild.guild_avatar).decode('utf-8') if current_user.guild.guild_avatar else None
+    else:
+        guild_avatar_base64 = None
     quest_count = Quest.query.count()
     solutions_count = SubmitedSolution.query.filter_by(quest_passed=True).count()
     server_time = datetime.now()
