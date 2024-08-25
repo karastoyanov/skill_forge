@@ -51,9 +51,17 @@ body {
     border-radius: 20px !important;
 }
 
-.user_profile_info.left_pane {
+.user_profile_info.left_pane, .left_panel_bottom {
     background: rgba(0, 0, 0, 0.5) !important;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .4) !important;
+}
+
+.left_panel_bottom {
+    margin-top: 3em;
+}
+
+.first-section-info {
+    padding: 0 !important;
 }
 
 
