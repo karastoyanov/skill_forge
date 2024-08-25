@@ -133,6 +133,10 @@ body {
     text-align: justify;
 }
 
+.guild_master_field {
+    color: #2f85e0 !important;
+}
+
 
 .achievement_descr {
     font-family: 'JetBrainsMonoRegular', sans-serif;
@@ -306,31 +310,6 @@ body {
     justify-content: right;
 }
 
-.submit-buton {
-    font-family: 'JetBrainsMonoRegular', sans-serif;
-    background: linear-gradient(#141e30, #243b55);
-    color: #03e9f4;
-    box-sizing: border-box;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
-    border-radius: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    height: 40px;
-    border: 0px;
-    vertical-align: middle;
-    width: 150px;
-}
-
-.submit-buton:hover {
-    color: #141e30 !important;
-    background: #03e9f4;
-    border-radius: 5px;
-    box-shadow: 0 0 2px #03e9f4,
-        0 0 5px #03e9f4,
-        0 0 10px #03e9f4,
-        0 0 15px #03e9f4;
-}
-
 .change-avatar-section {
     display: flex;
     flex-direction: row;
@@ -341,15 +320,36 @@ body {
 }
 
 
-.title {
-    color: #03e9f4;
-    font-size: 20px;
-    margin: 0
+
+
+.members_section .member_img {
+    align-self: center;
 }
 
-.value {
-    font-size: 18px;
-    color: white;
+.members_section .member_info_container {
+    align-self: center;
     margin: 0;
+    display: flex;
 }
 
+.members_section .member_info_container p {
+    margin: 0;
+    margin-left: 2em;
+}
+
+.members_section .member_info_container p span {
+    color: #bccfeb;
+}
+
+.members_section .right-section {
+    padding: 0;
+    display: flex;
+    align-self: center;
+}
+
+.members_section .right-section .delete_member_btn {
+    background-color: rgb(190, 0, 0);
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+}

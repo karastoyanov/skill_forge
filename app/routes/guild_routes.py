@@ -15,7 +15,6 @@ from app.database.mongodb_transactions import mongo_transaction
 # Import admin_required decorator
 from app.user_permission import admin_required
 import io
-import base64
 
 bp_guild = Blueprint('guilds', __name__)
 
@@ -38,7 +37,9 @@ def open_guilds_list():
 @login_required
 def open_guild(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
-    return render_template('guild_templates/guild_info.html', guild=guild)
+    avatar_base64 = base64.b64encode(guild.guild_avatar).decode('utf-8') if guild.guild_avatar else None
+
+    return render_template('guild_templates/guild_info.html', guild=guild, avatar_base64=avatar_base64)
 
 # Handle the guild avatar image requests
 @bp_guild.route('/guilds/avatar/<guild_id>')
@@ -56,7 +57,9 @@ def get_guild_avatar(guild_id):
 @bp_guild.route('/guilds/<guild_id>')
 def get_guild_info(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
-    return render_template('guild_templates/guild_info.html', guild=guild)
+    avatar_base64 = base64.b64encode(user.avatar).decode('utf-8') if guild.guild_avatar else None
+
+    return render_template('guild_templates/guild_info.html', guild=guild, avatar_base64=avatar_base64)
 
 # Join guild
 @bp_guild.route('/guilds/join/<guild_id>')
