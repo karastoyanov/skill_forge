@@ -52,19 +52,22 @@
                                 style='width: {{ xp_percentage }}%;'></div>
                         </div>
                         <p class="text-xs text-center">50 / 150 XP</p>
+                        {% if is_member == false %}
+                        <a href="{{ url_for('guilds.join_guild', guild_id=guild.guild_id) }}" class="mb-2 text-blue-300 join_guild_buton">
+                            JOIN GUILD
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-span-4 sm:col-span-9">
-                    <!-- User Stats Section -->
+                    <!-- Guild Stats Section -->
                     <div class="shadow rounded-lg p-6 user_profile_info left_pane">
-                        <!-- About Me Section -->
+                        <!-- About the Guild -->
                         <h2 class="text-xl font-bold mb-4 user_profile_info title">About The Guild</h2>
-
                         <div>
-
                             <div class="grid gap-6 mb-6 md:grid-cols-2">
                                 <div>
-                                    <label for="about_me"
+                                    <label for="about_guild"
                                         class="block mb-2 font-medium text-gray-900 dark:text-white">Guild Name</label>
                                     <p class="text-gray-900 rounded-lg 
                                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 

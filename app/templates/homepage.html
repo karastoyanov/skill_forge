@@ -74,7 +74,6 @@
                     <p class="mb-4 text-xl font-medium leading-tight homepage_box title">Guild</p>
                     {% if not user_guild %}
                     <p class="mb-2 text-base">Currently you are not in a guild</p>
-                    <p class="mb-2 text-base">You have 0 invitations pendings</p>
                     <div class="flex justify-left mt-0 space-x-5">
                         <div class="guild_button" onclick=location.href="{{ url_for('guilds.open_create_guild') }}">Create Guild</div>
                         <div class="guild_button" onclick=location.href="{{ url_for('guilds.open_guilds_list') }}">Join Guild</div>

@@ -53,7 +53,7 @@ class User(UserMixin, db.Model):
     # Define the relationship with the Comment model
     comments = db.relationship('Comment', back_populates='user')
     # Relationship with Guild model
-    guild_id = db.Column(db.String(20), db.ForeignKey('guilds.guild_id', use_alter=True, name='fk_user_guild'), nullable=True)
+    guild_id = db.Column(db.String(20), db.ForeignKey('guilds.guild_id', use_alter=True, name='fk_user_guild'), default="", nullable=True)
     guild = db.relationship('Guild', back_populates='members', foreign_keys=[guild_id])
 
     # For the Guild Master relationship (one-to-one)
@@ -258,3 +258,12 @@ class Guild(db.Model):
         user.guild_id = self.guild_id
         self.guild_members_count += 1
         db.session.commit()
+
+########### Define the Guild Join Request Model ###########
+class JoinRequest(db.Model):
+    __tablename__ = 'guild_join_requests'
+    request_id = db.Column(db.String(20), primary_key=True)
+    user_id = db.Column(db.String(20), db.ForeignKey('users.user_id'), nullable=False)
+    guild_id = db.Column(db.String(20), db.ForeignKey('guilds.guild_id'), nullable=False)
+    request_date = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    request_status = db.Column(db.Enum('Pending', 'Approved', 'Rejected', 'Cancelled', name='request_status'), nullable=False)

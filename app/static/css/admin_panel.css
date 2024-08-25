@@ -95,7 +95,7 @@ body {
 }
 
 .section-btn:hover {
-    background: #6d0101; /* Unique color for Python button hover */
+    background: #6d0101;
     border-radius: 5px;
     box-shadow: 0 0 5px #ff6868,
                 0 0 25px #ff6868,

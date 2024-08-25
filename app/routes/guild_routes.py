@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import Blueprint, redirect, url_for, request, render_template, jsonify, flash, abort, send_file
 from flask_login import login_required, current_user
 # Import the forms and models
-from app.models import Guild, User
+from app.models import Guild, User, JoinRequest
 from app.forms import CreateGuildForm
 # Import code runners
 from app.code_runners import run_python, run_javascript, run_java, run_csharp
@@ -30,7 +30,8 @@ def open_create_guild():
 @login_required
 def open_guilds_list():
     guilds = Guild.query.all()
-    return render_template('guild_templates/guilds_list.html', guilds=guilds)
+    guild_requests = JoinRequest.query.filter_by(user_id=current_user.user_id, request_status='Pending').all()
+    return render_template('guild_templates/guilds_list.html', guilds=guilds, guild_requests=guild_requests)
 
 # Redirect to the guild page
 @bp_guild.route('/guilds/<guild_id>', methods=['GET'])
@@ -38,8 +39,11 @@ def open_guilds_list():
 def open_guild(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
     avatar_base64 = base64.b64encode(guild.guild_avatar).decode('utf-8') if guild.guild_avatar else None
-
-    return render_template('guild_templates/guild_info.html', guild=guild, avatar_base64=avatar_base64)
+    if current_user.guild_id != "" or current_user.guild_id != None:
+        is_member = current_user.guild_id == guild_id
+    else:
+        is_member = False
+    return render_template('guild_templates/guild_info.html', guild=guild, avatar_base64=avatar_base64, is_member=is_member)
 
 # Handle the guild avatar image requests
 @bp_guild.route('/guilds/avatar/<guild_id>')
@@ -57,22 +61,39 @@ def get_guild_avatar(guild_id):
 @bp_guild.route('/guilds/<guild_id>')
 def get_guild_info(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
-    avatar_base64 = base64.b64encode(user.avatar).decode('utf-8') if guild.guild_avatar else None
+    avatar_base64 = base64.b64encode(User.avatar).decode('utf-8') if guild.guild_avatar else None
 
     return render_template('guild_templates/guild_info.html', guild=guild, avatar_base64=avatar_base64)
 
-# Join guild
-@bp_guild.route('/guilds/join/<guild_id>')
+# Join guild send request
+@bp_guild.route('/guilds/join_req/<guild_id>')
 def join_guild(guild_id):
-    guild = Guild.query.filter_by(guild_id=guild_id).first()
-    user = User.query.filter_by(user_id=current_user.user_id).first()
-
-    guild.guild_members_count += 1
-    user.guild_id = guild_id
-
+    guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
+    
+    existing_request = JoinRequest.query.filter_by(user_id=current_user.user_id, guild_id=guild_id).first()
+    if existing_request:
+        flash('You have already sent a request to join this guild!', 'error')
+        return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+    
+    if "GD-" in current_user.guild_id:
+        flash('You are already a member of a guild!', 'error')
+        return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+    
+    request_id = f"JR-{random.randint(1000000, 9999999)}"
+    while JoinRequest.query.filter_by(request_id=request_id).first():
+        request_id = f"JR-{random.randint(1000000, 9999999)}"
+        
+    new_request = JoinRequest(
+        request_id=request_id,
+        user_id=current_user.user_id,
+        guild_id=guild_id,
+        request_date=datetime.now(),
+        request_status='Pending'
+    )
+    db.session.add(new_request)
     db.session.commit()
-
-    return redirect(url_for('guilds.open_guilds_list'))
+    flash('Join guild request sent successfully!', 'success')
+    return redirect(url_for('guilds.open_guild', guild_id=guild_id))
 
 
 # Create new guild
