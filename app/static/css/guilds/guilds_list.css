@@ -28,7 +28,14 @@ body {
 .title {
     color: #03e9f4;
     font-family: 'JetBrainsMonoRegular', sans-serif;
+}
 
+.guild_join_request{
+    /* color: #03e9f4; */
+    background: rgba(0, 0, 0, 0.5);
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
 }
 
 .guild_card {

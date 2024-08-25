@@ -55,9 +55,10 @@ class User(UserMixin, db.Model):
     # Relationship with Guild model
     guild_id = db.Column(db.String(20), db.ForeignKey('guilds.guild_id', use_alter=True, name='fk_user_guild'), default="", nullable=True)
     guild = db.relationship('Guild', back_populates='members', foreign_keys=[guild_id])
-
     # For the Guild Master relationship (one-to-one)
     master_of = db.relationship('Guild', back_populates='guild_master', uselist=False, foreign_keys="[Guild.guild_master_id]")
+    # Relationship with JoinRequest model
+    join_requests = db.relationship('JoinRequest', back_populates='user')
 
 
     def __init__(self, username, first_name, last_name, password, email, avatar=None):
@@ -249,9 +250,10 @@ class Guild(db.Model):
     
     # Relationship with User model
     members = db.relationship('User', back_populates='guild', foreign_keys="[User.guild_id]")
-    
     # Relationship to reference guild master
     guild_master = db.relationship('User', back_populates='master_of', foreign_keys=[guild_master_id])
+    # Relationship with JoinRequest model
+    join_requests = db.relationship('JoinRequest', back_populates='guild', cascade="all, delete-orphan")
 
     def add_member(self, user):
         """Add a user as a member of the guild."""
@@ -267,3 +269,7 @@ class JoinRequest(db.Model):
     guild_id = db.Column(db.String(20), db.ForeignKey('guilds.guild_id'), nullable=False)
     request_date = db.Column(db.DateTime, default=datetime.now(), nullable=False)
     request_status = db.Column(db.Enum('Pending', 'Approved', 'Rejected', 'Cancelled', name='request_status'), nullable=False)
+    # Relationship with Guild model
+    guild = db.relationship('Guild', back_populates='join_requests')
+    # Relationship with User model
+    user = db.relationship('User', back_populates='join_requests')
