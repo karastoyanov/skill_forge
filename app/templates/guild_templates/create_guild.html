@@ -27,14 +27,9 @@
                     <img id="avatarPreview" src="{{ url_for('static', filename='images/default-guild-avatar.png') }}" alt="Avatar" class="guild_avatar">
                 </div>
             </div>
-            <div class="change-avatar-section">
-                <form action="{{ url_for('usr.open_user_profile') }}" method="post" enctype="multipart/form-data" class="ca-2">
-                    {{ form.hidden_tag() }}
-                    {{ form.avatar(class="ca-3", onchange='previewAvatar(event)', accept="image/*") }}
-                </form>
-            </div>
             <form action="{{ url_for('guilds.create_new_guild') }}" method="post" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
+                {{ form.avatar(class="ca-3", onchange='previewAvatar(event)', accept="image/*") }}
                 <div class="form-group">
                     {{ form.name.label(class="text_label") }}
                     {{ form.name(class="form-control", id="guildName", placeholder="Enter guild name") }}

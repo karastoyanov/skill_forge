@@ -101,7 +101,6 @@ def open_user_profile():
                         xp_percentage=xp_percentage,
                         max_xp=max_xp)
 
-
 # # Open user for editing from the Admin Panel
 @bp_usr.route('/edit_user/<user_id>')
 @login_required

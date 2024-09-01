@@ -64,11 +64,13 @@ body {
 }
 
 .text_label {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
     color: #03e9f4;
     font-size: 20px;
 }
 
 .form-control {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
     display: flex;
     color: #d2d0d0 !important;
     flex-direction: column;
@@ -80,6 +82,7 @@ body {
     margin-left: 10px;
     padding: 10px;
     border: 0px;
+    border-color: transparent !important;
 }
 
 /* Autofill styling */
@@ -95,7 +98,7 @@ body {
     font-family: 'JetBrainsMonoBold', sans-serif !important;
     display: inline-block;
     padding: 10px 20px;
-    color: #03e9f4;
+    color: #03e9f4 !important;
     background-color: rgba(0, 0, 0, .5) !important;
     font-size: 16px;
     text-decoration: none;
@@ -108,6 +111,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     border: 0;
+    border-color: transparent !important;
     width: 20%;
 }
 
@@ -155,10 +159,16 @@ body {
     color: #03e9f4;
 }
 
+.ca-3 {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    margin-bottom: 20px;
+    color: #03e9f4;
+}
+
 .ca-3::-webkit-file-upload-button {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     border-radius: 5px;
     background: linear-gradient(#141e30, #243b55);
     color: #03e9f4;
-
+    margin-bottom: 5px;
 }
