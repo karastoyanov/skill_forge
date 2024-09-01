@@ -41,10 +41,10 @@
                 <div class="col-span-4 sm:col-span-3">
                     <div class="shadow rounded-lg p-6 guild_info left_pane">
                         <div class="flex flex-col items-center">
-                            <img class="inline-block w-48 rounded-full user_avatar"
+                            <img class="inline-block w-48 rounded-full guild_avatar"
                                 src="{{ guild.guild_avatar and 'data:image/jpeg;base64,' + avatar_base64 or url_for('static', filename='images/anvil.png') }}"
                                 id="avatarPreview" alt="Avatar">
-                            <h1 class="text-xl font-bold guild_info username">{{guild.guild_name}}</h1>
+                            <h1 class="text-xl font-bold guild_info guildname">{{guild.guild_name}}</h1>
                         </div>
                         <div class="flex w-full h-4 mt-7 bg-gray-200 rounded-full overflow-hidde" role="progressbar"
                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
@@ -209,94 +209,34 @@
                 </div>
             </div>
 
+            <!-- Members Section -->
             <div class="members_section mt-40">
-                <h2 class="mb-10">Members</h2>
-                
+                <h2 class="mb-2 title">Members - {{guild_members_count}}</h2>
                 <ul role="list" class="divide-y divide-gray-100">
-                    <li class="flex justify-between gap-x-2 py-4">
-                        <div class="flex min-w-0 gap-x-4">
-                            <img class="h-12 w-12 flex-none rounded-full bg-gray-50 member_img"
-                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt="">
-                            <div class="min-w-0 flex-auto member_info_container">
-                                <a class="text-sm font-semibold leading-6 member_username">raya_petkova</a>
-                                <p><span class="font-bold">Level:</span> 6</p>
-                                <p><span class="font-bold">Rank:</span> 10</p>
+                    {% for member in guild_members %}
+                    <li class="flex justify-between gap-x-4 py-4 border-b border-gray-200 guild_member_card">
+                        <div class="flex items-center gap-x-4">
+                            <img class="h-14 w-14 rounded-full object-cover bg-gray-50 shadow-md"
+                                src="{{ url_for('usr.get_user_avatar', user_id=member.user_id) }}" alt="User Avatar">
+                            <div class="flex flex-row">
+                                <a class="text-lg font-semibold text-gray-900 hover:text-gray-700">raya_petkova</a>
+                                <p class="text-sm text-gray-600"><span class="font-semibold text-gray-800">Level:</span> 6</p>
+                                <p class="text-sm text-gray-600"><span class="font-semibold text-gray-800">Rank:</span> 10</p>
                             </div>
                         </div>
-                        <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end right-section">
-                            <button class="delete_member_btn"><span>&#10006;</span></button>
+                        <div class="flex items-center">
+                            <button class="delete_member_btn text-red-600 hover:text-red-800 p-2 rounded-full transition-colors duration-200">
+                                <span class="sr-only">Remove member</span>
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
                         </div>
                     </li>
-                    
-                    <li class="flex justify-between gap-x-2 py-4">
-                        <div class="flex min-w-0 gap-x-4">
-                            <img class="h-12 w-12 flex-none rounded-full bg-gray-50 member_img"
-                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt="">
-                            <div class="min-w-0 flex-auto member_info_container">
-                                <a class="text-sm font-semibold leading-6 member_username">raya_petkova</a>
-                                <p><span class="font-bold">Level:</span> 6</p>
-                                <p><span class="font-bold">Rank:</span> 10</p>
-                            </div>
-                        </div>
-                        <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end right-section">
-                            <button class="delete_member_btn"><span>&#10006;</span></button>
-                        </div>
-                    </li>
-
-                    <li class="flex justify-between gap-x-2 py-4">
-                        <div class="flex min-w-0 gap-x-4">
-                            <img class="h-12 w-12 flex-none rounded-full bg-gray-50 member_img"
-                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt="">
-                            <div class="min-w-0 flex-auto member_info_container">
-                                <a class="text-sm font-semibold leading-6 member_username">raya_petkova</a>
-                                <p><span class="font-bold">Level:</span> 6</p>
-                                <p><span class="font-bold">Rank:</span> 10</p>
-                            </div>
-                        </div>
-                        <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end right-section">
-                            <button class="delete_member_btn"><span>&#10006;</span></button>
-                        </div>
-                    </li>
-
-                    <li class="flex justify-between gap-x-2 py-4">
-                        <div class="flex min-w-0 gap-x-4">
-                            <img class="h-12 w-12 flex-none rounded-full bg-gray-50 member_img"
-                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt="">
-                            <div class="min-w-0 flex-auto member_info_container">
-                                <a class="text-sm font-semibold leading-6 member_username">raya_petkova</a>
-                                <p><span class="font-bold">Level:</span> 6</p>
-                                <p><span class="font-bold">Rank:</span> 10</p>
-                            </div>
-                        </div>
-                        <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end right-section">
-                            <button class="delete_member_btn"><span>&#10006;</span></button>
-                        </div>
-                    </li>
-
-                    <li class="flex justify-between gap-x-2 py-4">
-                        <div class="flex min-w-0 gap-x-4">
-                            <img class="h-12 w-12 flex-none rounded-full bg-gray-50 member_img"
-                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt="">
-                            <div class="min-w-0 flex-auto member_info_container">
-                                <a class="text-sm font-semibold leading-6 member_username">raya_petkova</a>
-                                <p><span class="font-bold">Level:</span> 6</p>
-                                <p><span class="font-bold">Rank:</span> 10</p>
-                            </div>
-                        </div>
-                        <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end right-section">
-                            <button class="delete_member_btn"><span>&#10006;</span></button>
-                        </div>
-                    </li>
+                    {% endfor %}
                 </ul>
-
             </div>
         </div>
-    </div>
     </div>
 
 

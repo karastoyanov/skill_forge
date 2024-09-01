@@ -38,6 +38,10 @@ def open_guild(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
     avatar_base64 = base64.b64encode(guild.guild_avatar).decode('utf-8') if guild.guild_avatar else None
     
+    # Get the guild members
+    guild_members = guild.members
+    guild_members_count = len(guild_members)
+    
     # Check if the user is a member of the guild
     if current_user.guild_id != "" or current_user.guild_id != None:
         is_member = current_user.guild_id == guild_id
@@ -58,7 +62,9 @@ def open_guild(guild_id):
                            avatar_base64=avatar_base64, 
                            is_member=is_member,
                            is_guild_master=is_guild_master,
-                           join_guild_requests=join_guild_requests)
+                           join_guild_requests=join_guild_requests,
+                           guild_members=guild_members,
+                           guild_members_count=guild_members_count)
 
 # Handle the guild avatar image requests
 @bp_guild.route('/guilds/avatar/<guild_id>', methods=['GET'])

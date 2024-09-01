@@ -57,7 +57,7 @@ body {
 }
 
 
-.guild_info.username {
+.guild_info.guildname {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     color: #03e9f4;
     font-size: 24px;
@@ -202,7 +202,7 @@ body {
     margin-bottom: 0px;
 }
 
-.user_avatar {
+.guild_avatar {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -220,7 +220,7 @@ body {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.user_avatar:hover {
+.guild_avatar:hover {
     box-shadow: 
         15px 15px 30px #03e9f4, 
         inset 0 5px 15px rgba(255, 255, 255, 0.3), 
@@ -462,4 +462,16 @@ body {
                 0 0 25px #03e9f4,
                 0 0 50px #03e9f4,
                 0 0 70px #03e9f4;
+}
+
+.guild_member_card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    background-color: rgba(0, 0, 0, .5) !important;
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
 }
