@@ -142,15 +142,29 @@
                     <div class="shadow rounded-lg p-6 mt-4 guild_info left_pane">
                     <h2 class="text-xl font-bold mb-4 guild_info title guild_master">Guild Master Menu</h2>
                     <div class="inline-flex rounded-md shadow-sm">
-                        <a href="#" aria-current="page" class="mr-2 px-4 py-2 text-sm font-medium guild_master_btn">
-                            Invite Member
-                        </a>
-                        <a href="#" aria-current="page" class="mr-2 px-4 py-2 text-sm font-medium guild_master_btn">
-                            Kick Member
-                        </a>
-                        <a href="#" aria-current="page" class="mr-2 px-4 py-2 text-sm font-medium guild_master_btn">
-                            Promote New Guild Master
-                        </a>
+                        <!-- Invite Member -->
+                        <div class="container vertical-align-container">
+                            <!-- Invite Member Button -->
+                            <button id="inviteButton" class="mr-0 px-4 py-2 text-sm font-medium guild_master_btn bg-blue-500 text-white rounded">
+                                Invite Member
+                            </button>
+                            <!-- Invite Member Form -->
+                            <div id="invMemberBody" class="inv-member-body hidden mt-4 p-4 border border-gray-300 rounded">
+                                <p>Invite Member</p>
+                            </div>
+                        </div>
+
+                        <!-- Kick Member -->
+                        <div class="container vertical-align-container">
+                            <!-- Kick Member Button -->
+                            <button id="kickButton" class="mr-0 px-4 py-2 text-sm font-medium guild_master_btn bg-blue-500 text-white rounded">
+                                Invite Member
+                            </button>
+                            <!-- Kick Member Form -->
+                            <div id="kickMemberBody" class="inv-member-body hidden mt-4 p-4 border border-gray-300 rounded">
+                                <p>Invite Member</p>
+                            </div>
+                        </div>
                     </div>
                     <h2 class="text-xl font-bold mt-4 mb-4 guild_info title guild_master">Users Join Requests</h2>
                     </div> 
@@ -252,6 +266,8 @@
 
     <!-- JavaScript managing the content in the Bootstrap table -->
     <script src="{{ url_for('static', filename='js/questsTable.js') }}"></script>
+    <!-- Guild Master functionalities -->
+    <script src="{{ url_for('static', filename='js/guildMaster.js') }}"></script>
     <script>
         function previewAvatar(event) {
             const avatarPreview = document.getElementById('avatarPreview');

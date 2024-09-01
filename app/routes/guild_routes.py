@@ -1,6 +1,7 @@
 import random, string, base64, json, os
 from datetime import datetime
 from flask import Blueprint, redirect, url_for, request, render_template, jsonify, flash, abort, send_file
+from sqlalchemy.sql import or_
 from flask_login import login_required, current_user
 # Import the forms and models
 from app.models import Guild, User, JoinRequest
@@ -123,22 +124,41 @@ def cancel_request(guild_id):
     return redirect(url_for('guilds.open_guilds_list'))
 
 
-# Accept join guild request - as guild master
-@bp_guild.route('/guilds/accept_req/<request_id>')
-def accept_request(request_id):
-    request = JoinRequest.query.filter_by(request_id=request_id).first_or_404()
-    guild = Guild.query.filter_by(guild_id=request.guild_id).first_or_404()
-    if guild.guild_master_id != current_user.user_id:
+# Invite user to guild - as guild master
+@bp_guild.route('/guilds/invite_user/<guild_id>', methods=['POST'])
+def invite_user(guild_id):
+    guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
+    if current_user.user_id != guild.guild_master_id:
         flash('You are not the guild master!', 'error')
-        return redirect(url_for('guilds.open_guild', guild_id=guild.guild_id))
+        return redirect(url_for('guilds.open_guild', guild_id=guild_id))
     
-    request.request_status = 'Accepted'
+    # Retrieve the user ID or username from the form
+    user_id, username = request.form.get('user_id')
+    # Query for user by user_id or username
+    user = User.query.filter(or_(User.user_id == user_id, User.username == username)).first()
+    if not user:
+        flash('User not found!', 'error')
+        return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+    
+    if user.guild_id != "" or user.guild_id != None:
+        flash('User is already a member of a guild!', 'error')
+        return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+    
+    request_id = f"JR-{random.randint(1000000, 9999999)}"
+    while JoinRequest.query.filter_by(request_id=request_id).first():
+        request_id = f"JR-{random.randint(1000000, 9999999)}"
+        
+    new_request = JoinRequest(
+        request_id=request_id,
+        user_id=user_id,
+        guild_id=guild_id,
+        request_date=datetime.now(),
+        request_status='Pending'
+    )
+    db.session.add(new_request)
     db.session.commit()
-    user = User.query.filter_by(user_id=request.user_id).first()
-    user.guild_id = guild.guild_id
-    db.session.commit()
-    flash('Join guild request accepted successfully!', 'success')
-    return redirect(url_for('guilds.open_guild', guild_id=guild.guild_id))
+    flash('User invited to guild successfully!', 'success')
+    return redirect(url_for('guilds.open_guild', guild_id=guild_id))
 
 # Create new guild
 @bp_guild.route('/guilds/create', methods=['GET', 'POST'])

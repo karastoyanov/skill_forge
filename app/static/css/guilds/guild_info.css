@@ -149,6 +149,12 @@ body {
                 0 0 70px #ff6868;
 }
 
+.vertical-align-container {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-start; /* Align items to the start of the container */
+}
+
 .guild_info.input_field {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     background: linear-gradient(#141e304b, #243b5548);
