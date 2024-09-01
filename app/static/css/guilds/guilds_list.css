@@ -1,3 +1,9 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap');
 @font-face {
@@ -7,6 +13,25 @@
     src: url('/static/fonts/ttf/JetBrainsMono-Bold.ttf') format('woff');
 }
 
+.alert {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    font-size: 16px;
+}
+
+.alert-success {
+    color: #4CAF50;
+}
+
+.alert-error {
+    color: #f44336;
+}
+
+.alert-info {
+    color: #2196F3;
+}
 
 html {
     font-family: 'JetBrainsMonoRegular', sans-serif;
@@ -30,12 +55,36 @@ body {
     font-family: 'JetBrainsMonoRegular', sans-serif;
 }
 
+.pending_requests {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    color: #03e9f4;
+    padding: 0px !important;
+    margin-bottom: 0px !important;
+}
+
 .guild_join_request{
     /* color: #03e9f4; */
     background: rgba(0, 0, 0, 0.5);
     font-family: 'JetBrainsMonoRegular', sans-serif;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
+}
+
+.req_link {
+    @apply text-blue-500;
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    text-decoration: none !important;
+}
+
+.req_cancel {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    text-decoration: none !important;
+    color: #f44336;
+}
+
+.req_cancel:hover {
+    color: #f44336;
+    
 }
 
 .guild_card {

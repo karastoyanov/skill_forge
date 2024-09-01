@@ -95,6 +95,19 @@ def join_guild(guild_id):
     flash('Join guild request sent successfully!', 'success')
     return redirect(url_for('guilds.open_guild', guild_id=guild_id))
 
+# Cancel join guild request
+@bp_guild.route('/guilds/cancel_req/<guild_id>')
+def cancel_request(guild_id):
+    guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
+    existing_request = JoinRequest.query.filter_by(user_id=current_user.user_id, guild_id=guild_id).first()
+    if existing_request:
+        db.session.delete(existing_request)
+        db.session.commit()
+        flash('Join guild request cancelled successfully!', 'success')
+    else:
+        flash('You have not sent a request to join this guild!', 'error')
+    # Redirect to the guilds list page
+    return redirect(url_for('guilds.open_guilds_list'))
 
 # Create new guild
 @bp_guild.route('/guilds/create', methods=['GET', 'POST'])
