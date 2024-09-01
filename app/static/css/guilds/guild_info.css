@@ -149,6 +149,13 @@ body {
                 0 0 70px #ff6868;
 }
 
+.request_el {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    font-size: 16px;
+    color: #d2d0d0;
+    background: linear-gradient(#141e30, #243b55) !important;
+}
+
 .vertical-align-container {
     display: flex;
     flex-direction: column; /* Stack children vertically */

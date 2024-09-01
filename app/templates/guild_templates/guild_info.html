@@ -3,7 +3,7 @@
 
 <head>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/anvil.png') }}">
-    <title>Skill Forge</title>
+    <title>Skill Forge - {{guild.guild_name}} Guild</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -137,40 +137,76 @@
                             </div>
                         </div>
                     </div>
-                    {% if is_guild_master == true %}
-                    <!-- Guild Master Section -->
-                    <div class="shadow rounded-lg p-6 mt-4 guild_info left_pane">
-                    <h2 class="text-xl font-bold mb-4 guild_info title guild_master">Guild Master Menu</h2>
-                    <div class="inline-flex rounded-md shadow-sm">
-                        <!-- Invite Member -->
-                        <div class="container vertical-align-container">
-                            <!-- Invite Member Button -->
-                            <button id="inviteButton" class="mr-0 px-4 py-2 text-sm font-medium guild_master_btn bg-blue-500 text-white rounded">
-                                Invite Member
-                            </button>
-                            <!-- Invite Member Form -->
-                            <div id="invMemberBody" class="inv-member-body hidden mt-4 p-4 border border-gray-300 rounded">
-                                <p>Invite Member</p>
-                            </div>
-                        </div>
 
-                        <!-- Kick Member -->
-                        <div class="container vertical-align-container">
-                            <!-- Kick Member Button -->
-                            <button id="kickButton" class="mr-0 px-4 py-2 text-sm font-medium guild_master_btn bg-blue-500 text-white rounded">
-                                Invite Member
-                            </button>
-                            <!-- Kick Member Form -->
-                            <div id="kickMemberBody" class="inv-member-body hidden mt-4 p-4 border border-gray-300 rounded">
-                                <p>Invite Member</p>
+                    <!-- Guild Master Section -->
+                    {% if is_guild_master == true %}
+                    <div class="shadow rounded-lg p-6 mt-4 guild_info left_pane">
+                        <h2 class="text-xl font-bold mb-4 guild_info title guild_master">Guild Master Menu</h2>
+                        <div class="inline-flex rounded-md shadow-sm w-1/2">
+                            <!-- Invite Member -->
+                            <div class="container vertical-align-container">
+                                <!-- Invite Member Button -->
+                                <button id="inviteButton" class="mr-2 text-sm font-medium rounded w-full guild_master_btn ">
+                                    Invite Member
+                                </button>
+                                <!-- Invite Member Form -->
+                                <div id="invMemberBody" class="inv-member-body hidden mt-4 p-4 border border-gray-300 rounded">
+                                    <p>Invite Member</p>
+                                </div>
                             </div>
+
+                            <!-- Kick Member -->
+                            <div class="container vertical-align-container">
+                                <!-- Kick Member Button -->
+                                <button id="kickButton" class="mr-0 text-sm font-medium rounded guild_master_btn ">
+                                    Kick Member
+                                </button>
+                                <!-- Kick Member Form -->
+                                <div id="kickMemberBody" class="inv-member-body hidden mt-4 p-4 border border-gray-300 rounded">
+                                    <p>Kick Member</p>
+                                </div>
+                            </div>
+                            
                         </div>
-                    </div>
-                    <h2 class="text-xl font-bold mt-4 mb-4 guild_info title guild_master">Users Join Requests</h2>
+                        <!-- Join Guild Requests Section -->
+                        <h2 class="text-xl font-bold mt-4 mb-0 guild_info title guild_master">Users Join Requests</h2>
+                        <div class="container mx-auto p-4">
+                            {% for request in join_guild_requests %}
+                            <div class="flex items-center shadow-md rounded-lg p-2 mb-2 request_el">
+                                <div class="flex-shrink-0 mr-4">
+                                    <img class="w-14 h-14 rounded-full object-cover"
+                                        src="{{ url_for('usr.get_user_avatar', user_id=request.user_id) }}" alt="Avatar">
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center mb-2">
+                                        <a href="{{ url_for('usr.open_user_profile_view', username=request.user.username) }}"
+                                            class="text-lg font-semibold text-blue-500" style="text-decoration: none">
+                                            {{ request.user.username }}
+                                        </a>
+                                        <span class="ml-2 text-sm text-white-500">Level {{ request.user.level }}</span>
+                                        <span class="ml-2 text-sm text-white-500">| Rank {{ request.user.rank }}</span>
+                                    </div>
+                                    <p class="text-sm text-white-500">
+                                        Requested on: <span class="text-blue-500">{{ request.request_date.strftime('%d-%m-%Y') }}</span>
+                                    </p>
+                                </div>
+                                <!-- Action Buttons -->
+                                <div class="flex space-x-2">
+                                    <a href="{{ url_for('guilds.handle_join_request', guild_id=request.guild_id, request_id=request.request_id, action='accept') }}" 
+                                    class="px-4 py-2 text-sm font-medium text-white bg-green-500 hover:bg-green-600 rounded-lg focus:outline-none">
+                                    Accept
+                                 </a>
+                                 <a href="{{ url_for('guilds.handle_join_request',guild_id=request.guild_id, request_id=request.request_id, action='decline') }}" 
+                                    class="px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg focus:outline-none">
+                                    Decline
+                                 </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div> 
                     {% endif %}
                 </div>
-
             </div>
 
             <div class="members_section mt-40">

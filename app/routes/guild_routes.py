@@ -1,4 +1,4 @@
-import random, string, base64, json, os
+import random, string, base64, json, os, io
 from datetime import datetime
 from flask import Blueprint, redirect, url_for, request, render_template, jsonify, flash, abort, send_file
 from sqlalchemy.sql import or_
@@ -13,9 +13,6 @@ from app.database.db_init import db
 from sqlalchemy.orm import joinedload
 # Import MongoDB transactions functions
 from app.database.mongodb_transactions import mongo_transaction
-# Import admin_required decorator
-from app.user_permission import admin_required
-import io
 
 bp_guild = Blueprint('guilds', __name__)
 
@@ -52,15 +49,20 @@ def open_guild(guild_id):
         is_guild_master = True
     else:
         is_guild_master = False
-        
+    
+    # Get all guild join requests in 'Pending' status
+    join_guild_requests = JoinRequest.query.filter_by(guild_id=guild_id, request_status='Pending').all()
+    
     return render_template('guild_templates/guild_info.html', 
                            guild=guild, 
                            avatar_base64=avatar_base64, 
                            is_member=is_member,
-                           is_guild_master=is_guild_master)
+                           is_guild_master=is_guild_master,
+                           join_guild_requests=join_guild_requests)
 
 # Handle the guild avatar image requests
-@bp_guild.route('/guilds/avatar/<guild_id>')
+@bp_guild.route('/guilds/avatar/<guild_id>', methods=['GET'])
+@login_required
 def get_guild_avatar(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
     if guild.guild_avatar:
@@ -73,14 +75,19 @@ def get_guild_avatar(guild_id):
 
 # Redirect to the guild info page
 @bp_guild.route('/guilds/<guild_id>')
+@login_required
 def get_guild_info(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
     avatar_base64 = base64.b64encode(User.avatar).decode('utf-8') if guild.guild_avatar else None
 
-    return render_template('guild_templates/guild_info.html', guild=guild, avatar_base64=avatar_base64)
+    
+    return render_template('guild_templates/guild_info.html',
+                           guild=guild, 
+                           avatar_base64=avatar_base64)
 
 # Join guild send request
 @bp_guild.route('/guilds/join_req/<guild_id>')
+@login_required
 def join_guild(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
     
@@ -111,11 +118,12 @@ def join_guild(guild_id):
 
 # Cancel join guild request
 @bp_guild.route('/guilds/cancel_req/<guild_id>')
+@login_required
 def cancel_request(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
     existing_request = JoinRequest.query.filter_by(user_id=current_user.user_id, guild_id=guild_id).first()
     if existing_request:
-        db.session.delete(existing_request)
+        existing_request.request_status = 'Cancelled'
         db.session.commit()
         flash('Join guild request cancelled successfully!', 'success')
     else:
@@ -123,9 +131,9 @@ def cancel_request(guild_id):
     # Redirect to the guilds list page
     return redirect(url_for('guilds.open_guilds_list'))
 
-
 # Invite user to guild - as guild master
 @bp_guild.route('/guilds/invite_user/<guild_id>', methods=['POST'])
+@login_required
 def invite_user(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
     if current_user.user_id != guild.guild_master_id:
@@ -158,6 +166,39 @@ def invite_user(guild_id):
     db.session.add(new_request)
     db.session.commit()
     flash('User invited to guild successfully!', 'success')
+    return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+
+# Accept or Decline join guild request - as guild master
+@bp_guild.route('/guilds/respond_req/<guild_id>/<request_id>/<action>', methods=['GET', 'POST'])
+@login_required
+def handle_join_request(request_id, guild_id, action):
+    guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
+    # Check if the user is the guild master
+    if current_user.user_id != guild.guild_master_id:
+        flash('You are not the guild master!', 'error')
+        return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+
+    if action == 'accept':
+        request = JoinRequest.query.filter_by(request_id=request_id).first_or_404()
+        request.request_status = 'Approved'
+        db.session.commit()
+        new_status = 'Accepted'
+        
+        # Update the user's guild ID
+        user = User.query.filter_by(user_id=request.user_id).first()
+        user.guild_id = guild_id
+        db.session.commit()
+        # Add the user to the guild
+        guild.members.append(user)
+        db.session.commit()
+    elif action == 'decline':
+        # Update the request status to 'Rejected'
+        request = JoinRequest.query.filter_by(request_id=request_id).first_or_404()
+        request.request_status = 'Rejected'
+        db.session.commit()
+        new_status = 'Declined'
+        
+    flash(f'Request has been {new_status.lower()}!', 'success')
     return redirect(url_for('guilds.open_guild', guild_id=guild_id))
 
 # Create new guild
