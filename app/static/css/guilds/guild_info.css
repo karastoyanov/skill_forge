@@ -381,3 +381,30 @@ body {
                 0 0 50px #ff6868,
                 0 0 70px #ff6868;
 }
+
+.all_guilds_button{
+    font-family: 'JetBrainsMonoBold', sans-serif !important;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    background-color: rgba(0, 0, 0, .5) !important;
+    font-size: 16px;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    letter-spacing: 4px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 0;
+}
+
+.all_guilds_button:hover {
+    background: #03e9f4;
+    color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03e9f4,
+                0 0 25px #03e9f4,
+                0 0 50px #03e9f4,
+                0 0 70px #03e9f4;
+}
