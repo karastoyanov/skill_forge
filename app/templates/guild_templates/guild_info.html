@@ -29,7 +29,7 @@
 
     <!-- User Profile Section -->
     <div>
-        <div class="container mx-auto py-8 user_profile_info">
+        <div class="container mx-auto py-8 guild_info">
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             {% for category, message in messages %}
@@ -39,16 +39,16 @@
             {% endwith %}
             <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
                 <div class="col-span-4 sm:col-span-3">
-                    <div class="shadow rounded-lg p-6 user_profile_info left_pane">
+                    <div class="shadow rounded-lg p-6 guild_info left_pane">
                         <div class="flex flex-col items-center">
                             <img class="inline-block w-48 rounded-full user_avatar"
                                 src="{{ guild.guild_avatar and 'data:image/jpeg;base64,' + avatar_base64 or url_for('static', filename='images/anvil.png') }}"
                                 id="avatarPreview" alt="Avatar">
-                            <h1 class="text-xl font-bold user_profile_info username">{{guild.guild_name}}</h1>
+                            <h1 class="text-xl font-bold guild_info username">{{guild.guild_name}}</h1>
                         </div>
                         <div class="flex w-full h-4 mt-7 bg-gray-200 rounded-full overflow-hidde" role="progressbar"
                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                            <div class="flex flex-col justify-center rounded-full overflow-hidden text-xs text-white text-center whitespace-nowrap dark:bg-blue-500 transition duration-500 user_profile_info xp_points"
+                            <div class="flex flex-col justify-center rounded-full overflow-hidden text-xs text-white text-center whitespace-nowrap dark:bg-blue-500 transition duration-500 guild_info xp_points"
                                 style='width: {{ xp_percentage }}%;'></div>
                         </div>
                         <p class="text-xs text-center">50 / 150 XP</p>
@@ -63,9 +63,9 @@
                 </div>
                 <div class="col-span-4 sm:col-span-9">
                     <!-- Guild Stats Section -->
-                    <div class="shadow rounded-lg p-6 user_profile_info left_pane">
+                    <div class="shadow rounded-lg p-6 guild_info left_pane">
                         <!-- About the Guild -->
-                        <h2 class="text-xl font-bold mb-4 user_profile_info title">About The Guild</h2>
+                        <h2 class="text-xl font-bold mb-4 guild_info title">About The Guild</h2>
                         <div>
                             <div class="grid gap-6 mb-6 md:grid-cols-2">
                                 <div>
@@ -74,7 +74,7 @@
                                     <p class="text-gray-900 rounded-lg 
                                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                        user_profile_info about_me_field">{{guild.guild_name}}
+                                        guild_info about_me_field">{{guild.guild_name}}
                                     </p>
                                 </div>
 
@@ -86,13 +86,12 @@
                                         class="text-gray-900 rounded-lg 
                                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                        user_profile_info about_me_field guild_master_field">{{guild.guild_master.first_name
+                                        guild_info about_me_field guild_master_field">{{guild.guild_master.first_name
                                         + ' ' + guild.guild_master.last_name}}
                                     </a>
                                 </div>
                             </div>
-
-
+                            
                             <div class="grid gap-6 mb-6 md:grid-cols-1">
                                 <div>
                                     <label for="first_name"
@@ -100,7 +99,7 @@
                                     <p class="text-gray-900 rounded-lg 
                                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                        user_profile_info about_me_field">{{guild.description}}
+                                        guild_info about_me_field">{{guild.description}}
                                     </p>
                                 </div>
                             </div>
@@ -112,7 +111,7 @@
                                     <p class="text-gray-900 rounded-lg 
                                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                        user_profile_info about_me_field">{{guild.points}}
+                                        guild_info about_me_field">{{guild.points}}
                                     </p>
                                 </div>
                                 <div>
@@ -121,7 +120,7 @@
                                     <p class="text-gray-900 rounded-lg 
                                             focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                            user_profile_info about_me_field">{{guild.level}}
+                                            guild_info about_me_field">{{guild.level}}
                                     </p>
                                 </div>
 
@@ -132,15 +131,30 @@
                                     <p class="text-gray-900 rounded-lg 
                                             focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                            user_profile_info about_me_field">{{guild.dungeons_completed}}
+                                            guild_info about_me_field">{{guild.dungeons_completed}}
                                     </p>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
-
+                    {% if is_guild_master == true %}
+                    <!-- Guild Master Section -->
+                    <div class="shadow rounded-lg p-6 mt-4 guild_info left_pane">
+                    <h2 class="text-xl font-bold mb-4 guild_info title guild_master">Guild Master Menu</h2>
+                    <div class="inline-flex rounded-md shadow-sm">
+                        <a href="#" aria-current="page" class="mr-2 px-4 py-2 text-sm font-medium guild_master_btn">
+                            Invite Member
+                        </a>
+                        <a href="#" aria-current="page" class="mr-2 px-4 py-2 text-sm font-medium guild_master_btn">
+                            Kick Member
+                        </a>
+                        <a href="#" aria-current="page" class="mr-2 px-4 py-2 text-sm font-medium guild_master_btn">
+                            Promote New Guild Master
+                        </a>
+                    </div>
+                    <h2 class="text-xl font-bold mt-4 mb-4 guild_info title guild_master">Users Join Requests</h2>
+                    </div> 
+                    {% endif %}
                 </div>
 
             </div>

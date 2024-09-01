@@ -39,11 +39,24 @@ def open_guilds_list():
 def open_guild(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
     avatar_base64 = base64.b64encode(guild.guild_avatar).decode('utf-8') if guild.guild_avatar else None
+    
+    # Check if the user is a member of the guild
     if current_user.guild_id != "" or current_user.guild_id != None:
         is_member = current_user.guild_id == guild_id
     else:
         is_member = False
-    return render_template('guild_templates/guild_info.html', guild=guild, avatar_base64=avatar_base64, is_member=is_member)
+    
+    # Check if the user is the guild master
+    if current_user.user_id == guild.guild_master_id:
+        is_guild_master = True
+    else:
+        is_guild_master = False
+        
+    return render_template('guild_templates/guild_info.html', 
+                           guild=guild, 
+                           avatar_base64=avatar_base64, 
+                           is_member=is_member,
+                           is_guild_master=is_guild_master)
 
 # Handle the guild avatar image requests
 @bp_guild.route('/guilds/avatar/<guild_id>')
@@ -108,6 +121,24 @@ def cancel_request(guild_id):
         flash('You have not sent a request to join this guild!', 'error')
     # Redirect to the guilds list page
     return redirect(url_for('guilds.open_guilds_list'))
+
+
+# Accept join guild request - as guild master
+@bp_guild.route('/guilds/accept_req/<request_id>')
+def accept_request(request_id):
+    request = JoinRequest.query.filter_by(request_id=request_id).first_or_404()
+    guild = Guild.query.filter_by(guild_id=request.guild_id).first_or_404()
+    if guild.guild_master_id != current_user.user_id:
+        flash('You are not the guild master!', 'error')
+        return redirect(url_for('guilds.open_guild', guild_id=guild.guild_id))
+    
+    request.request_status = 'Accepted'
+    db.session.commit()
+    user = User.query.filter_by(user_id=request.user_id).first()
+    user.guild_id = guild.guild_id
+    db.session.commit()
+    flash('Join guild request accepted successfully!', 'success')
+    return redirect(url_for('guilds.open_guild', guild_id=guild.guild_id))
 
 # Create new guild
 @bp_guild.route('/guilds/create', methods=['GET', 'POST'])

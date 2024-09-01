@@ -45,19 +45,19 @@ body {
     color: #2196F3;
 }
 
-.user_profile_info {
+.guild_info {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     color: #d2d0d0;
     border-radius: 20px !important;
 }
 
-.user_profile_info.left_pane {
+.guild_info.left_pane {
     background: rgba(0, 0, 0, 0.5) !important;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .4) !important;
 }
 
 
-.user_profile_info.username {
+.guild_info.username {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     color: #03e9f4;
     font-size: 24px;
@@ -66,7 +66,7 @@ body {
     margin-bottom: 2px;
 }
 
-.user_profile_info.name {
+.guild_info.name {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     color: #d2d0d0;
     font-size: 12px;
@@ -75,7 +75,7 @@ body {
     margin-bottom: 10px;
 }
 
-.user_profile_info.rank {
+.guild_info.rank {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     color: #d2d0d0;
     text-align: center;
@@ -84,7 +84,7 @@ body {
 }
 
 
-.user_profile_info.level {
+.guild_info.level {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     color: #d2d0d0;
     text-align: center;
@@ -92,22 +92,64 @@ body {
     margin-bottom: 0px;
 }
 
-.user_profile_info.xp_points {
+.guild_info.xp_points {
     background: linear-gradient(90deg, #03858b, #03e9f4);
 }
 
 
-.user_profile_info.title {
+.guild_info.title {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     color: #03e9f4;
 }
 
-.user_profile_info.about_me_text {
+.guild_info.title.guild_master {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    color: #f44336;
+}
+
+.guild_info.about_me_text {
     font-size: 14px;
     color: #d2d0d0;
 }
 
-.user_profile_info.input_field {
+.guild_master_btn {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    font-size: 16px;
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #ffffff;
+    background-color: #ae0303cf;
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(244, 120, 120, 0.2);
+    border-radius: 10px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .6s;
+    margin: 10px;
+    border: 0px;
+    width: auto;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+
+.guild_master_btn:hover {
+    background: #6d0101;
+    color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #ff6868,
+                0 0 25px #ff6868,
+                0 0 50px #ff6868,
+                0 0 70px #ff6868;
+}
+
+.guild_info.input_field {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     background: linear-gradient(#141e304b, #243b5548);
     color: #d2d0d0;
@@ -120,7 +162,7 @@ body {
     border: 0px;
     vertical-align: middle;
 }
-.user_profile_info.about_me_field {
+.guild_info.about_me_field {
     font-family: 'JetBrainsMonoRegular', sans-serif;
     background: linear-gradient(#141e304b, #243b5548);
     color: #d2d0d0;
