@@ -183,6 +183,10 @@ def kick_user(guild_id, user_id):
         flash('You are not the guild master!', 'error')
         return redirect(url_for('guilds.open_guild', guild_id=guild_id))
     
+    if user_id == guild.guild_master_id:
+        flash('You cannot kick yourself from the guild!', 'error')
+        return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+    
     print("Got here!")
     user = User.query.filter_by(user_id=user_id).first_or_404()
     if user.guild_id is None or user.guild_id == "" or user.guild_id != guild_id:
@@ -191,7 +195,7 @@ def kick_user(guild_id, user_id):
     
     user.guild_id = ""
     db.session.commit()
-    flash(f'User {user.username} kicked from guild successfully!', 'success')
+    flash(f'User {user.username} was kicked from guild successfully!', 'success')
     return redirect(url_for('guilds.open_guild', guild_id=guild_id))
 
 # Accept or Decline join guild request - as guild master
@@ -217,14 +221,16 @@ def handle_join_request(request_id, guild_id, action):
         # Add the user to the guild
         guild.members.append(user)
         db.session.commit()
+        flash(f'Request has been {new_status.lower()}! {user.username} is now member of the guild!', 'success')
     elif action == 'decline':
         # Update the request status to 'Rejected'
         request = JoinRequest.query.filter_by(request_id=request_id).first_or_404()
+        user = User.query.filter_by(user_id=request.user_id).first()
         request.request_status = 'Rejected'
         db.session.commit()
         new_status = 'Declined'
-        
-    flash(f'Request has been {new_status.lower()}!', 'success')
+        flash(f'Request has been {new_status.lower()}! {user.username} was not accepted in the guild!', 'info')
+
     return redirect(url_for('guilds.open_guild', guild_id=guild_id))
 
 # Create new guild

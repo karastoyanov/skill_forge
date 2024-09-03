@@ -34,6 +34,7 @@ body {
 }
 
 .alert-success {
+    background-color: none !important;
     color: #4CAF50;
 }
 
@@ -397,22 +398,32 @@ body {
     margin-bottom: 2px;
 }
 
+.members_section_username {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
+    background-color: transparent !important;
+    box-shadow: none !important;
+
+}
+
 .members_section .member_img {
     align-self: center;
 }
 
 .members_section .member_info_container {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
     align-self: center;
     margin: 0;
     display: flex;
 }
 
 .members_section .member_info_container p {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
     margin: 0;
     margin-left: 2em;
 }
 
 .members_section .member_info_container p span {
+    font-family: 'JetBrainsMonoRegular', sans-serif;
     color: #bccfeb;
 }
 
