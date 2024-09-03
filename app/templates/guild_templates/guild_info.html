@@ -86,8 +86,7 @@
                                         class="text-gray-900 rounded-lg 
                                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                                        guild_info about_me_field guild_master_field">{{guild.guild_master.first_name
-                                        + ' ' + guild.guild_master.last_name}}
+                                        guild_info about_me_field guild_master_field">{{guild.guild_master.username}}
                                     </a>
                                 </div>
                             </div>
@@ -210,28 +209,32 @@
             </div>
 
             <!-- Members Section -->
-            <div class="members_section mt-40">
-                <h2 class="mb-2 title">Members - {{guild_members_count}}</h2>
-                <ul role="list" class="divide-y divide-gray-100">
+            <div class="members_section mt-16 p-6 rounded-lg shadow-lg">
+                <h2 class="mb-4 text-2xl font-bold members_section title">Members - {{guild_members_count}}</h2>
+                <ul role="list" class="divide-y divide-gray-200">
                     {% for member in guild_members %}
-                    <li class="flex justify-between gap-x-4 py-4 border-b border-gray-200 guild_member_card">
+                    <li class="flex justify-between items-center gap-x-4 py-4 0 rounded-lg shadow-sm">
                         <div class="flex items-center gap-x-4">
                             <img class="h-14 w-14 rounded-full object-cover bg-gray-50 shadow-md"
                                 src="{{ url_for('usr.get_user_avatar', user_id=member.user_id) }}" alt="User Avatar">
-                            <div class="flex flex-row">
-                                <a class="text-lg font-semibold text-gray-900 hover:text-gray-700">raya_petkova</a>
-                                <p class="text-sm text-gray-600"><span class="font-semibold text-gray-800">Level:</span> 6</p>
-                                <p class="text-sm text-gray-600"><span class="font-semibold text-gray-800">Rank:</span> 10</p>
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:gap-x-6">
+                                <a href="{{ url_for('usr.open_user_profile_view', username=member.username) }}" 
+                                   class="text-lg font-semibold text-blue-500 hover:underline">
+                                    {{ member.username }}
+                                </a>
+                                <p class="mt-2 sm:mt-0 text-gray-600"><span class="font-semibold text-blue-400">Level: </span>{{ member.level }}</p>
+                                <p class="mt-2 sm:mt-0 text-gray-600"><span class="font-semibold text-blue-400">Rank: </span>{{ member.rank }}</p>
                             </div>
                         </div>
-                        <div class="flex items-center">
-                            <button class="delete_member_btn text-red-600 hover:text-red-800 p-2 rounded-full transition-colors duration-200">
-                                <span class="sr-only">Remove member</span>
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
+                        {% if is_guild_master %}
+                            <div class="flex items-center">
+                                <a href="{{ url_for('guilds.kick_user', user_id=member.user_id, guild_id=member.guild_id) }}">
+                                    <button class="text-lg font-medium text-red-600 hover:text-red-800 p-2 transition duration-200 ease-in-out focus:outline-none">
+                                        Remove member
+                                    </button>
+                                </a>
+                            </div>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>

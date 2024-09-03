@@ -97,7 +97,7 @@ def get_guild_info(guild_id):
 def join_guild(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
     
-    existing_request = JoinRequest.query.filter_by(user_id=current_user.user_id, guild_id=guild_id).first()
+    existing_request = JoinRequest.query.filter_by(user_id=current_user.user_id, guild_id=guild_id, request_status="Pending").first()
     if existing_request:
         flash('You have already sent a request to join this guild!', 'error')
         return redirect(url_for('guilds.open_guild', guild_id=guild_id))
@@ -127,7 +127,7 @@ def join_guild(guild_id):
 @login_required
 def cancel_request(guild_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
-    existing_request = JoinRequest.query.filter_by(user_id=current_user.user_id, guild_id=guild_id).first()
+    existing_request = JoinRequest.query.filter_by(user_id=current_user.user_id, guild_id=guild_id, request_status="Pending").first()
     if existing_request:
         existing_request.request_status = 'Cancelled'
         db.session.commit()
@@ -172,6 +172,26 @@ def invite_user(guild_id):
     db.session.add(new_request)
     db.session.commit()
     flash('User invited to guild successfully!', 'success')
+    return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+
+# Kick user from guild - as guild master
+@bp_guild.route('/guilds/kick_user/<user_id>/<guild_id>', methods=['GET', 'POST'])
+@login_required
+def kick_user(guild_id, user_id):
+    guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
+    if current_user.user_id != guild.guild_master_id:
+        flash('You are not the guild master!', 'error')
+        return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+    
+    print("Got here!")
+    user = User.query.filter_by(user_id=user_id).first_or_404()
+    if user.guild_id is None or user.guild_id == "" or user.guild_id != guild_id:
+        flash('User is not a member of this guild!', 'error')
+        return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+    
+    user.guild_id = ""
+    db.session.commit()
+    flash(f'User {user.username} kicked from guild successfully!', 'success')
     return redirect(url_for('guilds.open_guild', guild_id=guild_id))
 
 # Accept or Decline join guild request - as guild master
