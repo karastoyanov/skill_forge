@@ -59,6 +59,8 @@ class User(UserMixin, db.Model):
     master_of = db.relationship('Guild', back_populates='guild_master', uselist=False, foreign_keys="[Guild.guild_master_id]")
     # Relationship with JoinRequest model
     join_requests = db.relationship('JoinRequest', back_populates='user')
+    # Relationship with JoinInvite model
+    join_invites = db.relationship('JoinInvite', back_populates='user')
 
 
     def __init__(self, username, first_name, last_name, password, email, avatar=None):
@@ -97,7 +99,6 @@ class User(UserMixin, db.Model):
         if self.avatar:
             return base64.b64encode(self.avatar).decode('utf-8')
         return None
-
 
 ########### Define the model for reset password tokens ###########
 class ResetToken(db.Model):
@@ -161,7 +162,6 @@ class Quest(db.Model):
     # Define the relationship between the Quest model and the Comment model
     comments = db.relationship('Comment', back_populates='quest')
     
-
 ########### Define the Quest Comment model ###########
 class Comment(db.Model):
     __tablename__ = 'quest_comments'
@@ -198,7 +198,6 @@ class SubmitedQuest(db.Model):
     type = db.Column(db.Enum('Basic', 'Advanced', name='quest_type'), nullable=True)
     comments=db.Column(JSON, default = [], nullable=True) # Store comments for the submited quests
     
-
 ########### Define the ReportedQuest model - Quest reported by the user ###########
 # The class which will store the reported quests from the users
 class ReportedQuest(db.Model):
@@ -216,7 +215,6 @@ class ReportedQuest(db.Model):
     reported_quest = db.relationship("Quest", foreign_keys=[quest_id], backref="reported_quests")
     user_reporter = db.relationship("User", foreign_keys=[report_user_id], backref="reported_quests")
     admin = db.relationship("User", foreign_keys=[admin_assigned], backref="assigned_reports")
-
 
 ########### Define the SubmitedSolution model - the submited quest solutions by the users ###########
 # Define the structure of the user_submited_solutions table.
@@ -254,6 +252,8 @@ class Guild(db.Model):
     guild_master = db.relationship('User', back_populates='master_of', foreign_keys=[guild_master_id])
     # Relationship with JoinRequest model
     join_requests = db.relationship('JoinRequest', back_populates='guild', cascade="all, delete-orphan")
+    # Relationship with JoinInvite model
+    join_invites = db.relationship('JoinInvite', back_populates='guild', cascade="all, delete-orphan")
 
     def add_member(self, user):
         """Add a user as a member of the guild."""
@@ -273,3 +273,17 @@ class JoinRequest(db.Model):
     guild = db.relationship('Guild', back_populates='join_requests')
     # Relationship with User model
     user = db.relationship('User', back_populates='join_requests')
+
+########### Define the Guild Join Invite Model ###########
+class JoinInvite(db.Model):
+    __tablename__ = 'guild_join_invites'
+    invite_id = db.Column(db.String(20), primary_key=True)
+    user_id = db.Column(db.String(20), db.ForeignKey('users.user_id'), nullable=False)
+    guild_id = db.Column(db.String(20), db.ForeignKey('guilds.guild_id'), nullable=False)
+    invite_date = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    invite_status = db.Column(db.Enum('Pending', 'Accepted', 'Rejected', 'Cancelled', name='invite_status'), nullable=False)
+    message = db.Column(db.String(200), nullable=True)
+    # Relationship with Guild model
+    guild = db.relationship('Guild', back_populates='join_invites')
+    # Relationship with User model
+    user = db.relationship('User', back_populates='join_invites')

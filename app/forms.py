@@ -66,7 +66,6 @@ class RegistrationForm(FlaskForm):
     ])
     submit = SubmitField('Register')
     
-
 ########### Contact Form ###########
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
@@ -100,7 +99,6 @@ class PasswordResetForm(FlaskForm):
     ],
     render_kw={'placeholder': 'Repeat Password'})
     submit = SubmitField('Reset Password')
-
 
 ########### Create New Quest Form - as Admin ###########
 class QuestForm(FlaskForm):
@@ -247,3 +245,11 @@ class CreateGuildForm(FlaskForm):
     description = TextAreaField('Description', validators=[Optional(), Length(min=10, max=500)])
     avatar = FileField('Avatar')
     submit = SubmitField('Create Guild')
+    
+########### Edit Guild Form ###########
+
+########### Invite User to Guild Form - As Guild Master ###########
+class InviteUserForm(FlaskForm):
+    user_input = StringField('User', validators=[DataRequired(message="Please provide a username or user ID")])
+    message = TextAreaField('Message (optional)', validators=[Optional(), Length(min=10, max=200)])
+    submit = SubmitField('Send Invite')

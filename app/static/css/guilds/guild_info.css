@@ -120,7 +120,7 @@ body {
     display: inline-block;
     padding: 10px 20px;
     color: #ffffff;
-    background-color: #ae0303cf;
+    background-color: #ae0303cf !important;
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(244, 120, 120, 0.2);
     border-radius: 10px;
@@ -131,7 +131,7 @@ body {
     overflow: hidden;
     transition: .6s;
     margin: 10px;
-    border: 0px;
+    border: 0px !important;
     width: auto;
     height: auto;
     justify-content: center;
@@ -141,7 +141,7 @@ body {
 }
 
 .guild_master_btn:hover {
-    background: #6d0101;
+    background: #6d0101 !important;
     color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 0 5px #ff6868,
@@ -507,4 +507,11 @@ body {
     background-color: rgba(0, 0, 0, .5) !important;
     border-radius: 10px;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+}
+
+.modal_el {
+    font-family: 'JetBrainsMonoRegular', sans-serif !important;
+    font-size: 16px;
+    color: #d2d0d0 !important;
+    background: linear-gradient(#141e30, #243b55) !important;
 }
