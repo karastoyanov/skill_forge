@@ -208,6 +208,7 @@ def kick_user(guild_id, user_id):
         return redirect(url_for('guilds.open_guild', guild_id=guild_id))
     
     user.guild_id = ""
+    guild.guild_members_count -= 1
     db.session.commit()
     flash(f'User {user.username} was kicked from guild successfully!', 'success')
     return redirect(url_for('guilds.open_guild', guild_id=guild_id))
