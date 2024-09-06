@@ -241,12 +241,28 @@
                                 <div class="flex items-center justify-center mt-0">
                                     {% if is_guild_master %}
                                     <div class="flex items-center mt-0">
-                                        <a href="{{ url_for('guilds.kick_user', user_id=member.user_id, guild_id=member.guild_id) }}">
-                                            <button
-                                                class="text-lg font-medium text-red-600 hover:text-red-800 p-0 transition duration-200 ease-in-out focus:outline-none">
-                                                Remove member
-                                            </button>
-                                        </a>
+                                        <!-- Kick Member Modal -->
+                                        <button type="button" class="btn btn-primary guild_master_btn" data-toggle="modal" data-target="#removeMemberModal" data-whatever="@mdo">Remove member</button>
+                                        <div class="modal fade" id="removeMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content modal_el">
+                                                    <div class="modal-body">
+                                                        <form action="{{ url_for('guilds.kick_user', user_id=member.user_id, guild_id=member.guild_id) }}" method="POST">
+                                                            {{ form.hidden_tag() }}
+                                                            <div class="form-group">
+                                                                <h5>Are you sure you would like to remove <span class="member-username-remove">{{ member.username }}</span>?</h5>
+                                                            </div>
+                                                
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Remove</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     {% endif %}
                                 </div>

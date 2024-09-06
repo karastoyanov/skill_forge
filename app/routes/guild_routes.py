@@ -192,6 +192,7 @@ def invite_user(guild_id):
 @login_required
 def kick_user(guild_id, user_id):
     guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
+    
     if current_user.user_id != guild.guild_master_id:
         flash('You are not the guild master!', 'error')
         return redirect(url_for('guilds.open_guild', guild_id=guild_id))

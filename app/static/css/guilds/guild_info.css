@@ -515,3 +515,7 @@ body {
     color: #d2d0d0 !important;
     background: linear-gradient(#141e30, #243b55) !important;
 }
+
+.member-username-remove {
+    color: #2d92ff;
+}
