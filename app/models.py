@@ -53,7 +53,7 @@ class User(UserMixin, db.Model):
     # Define the relationship with the Comment model
     comments = db.relationship('Comment', back_populates='user')
     # Relationship with Guild model
-    guild_id = db.Column(db.String(20), db.ForeignKey('guilds.guild_id', use_alter=True, name='fk_user_guild'), default="", nullable=True)
+    guild_id = db.Column(db.String(20), db.ForeignKey('guilds.guild_id', use_alter=True, name='fk_user_guild'), nullable=True)
     guild = db.relationship('Guild', back_populates='members', foreign_keys=[guild_id])
     # For the Guild Master relationship (one-to-one)
     master_of = db.relationship('Guild', back_populates='guild_master', uselist=False, foreign_keys="[Guild.guild_master_id]")

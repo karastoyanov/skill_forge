@@ -18,7 +18,7 @@ bp_guild = Blueprint('guilds', __name__)
 @login_required
 def open_create_guild():
     form = CreateGuildForm()
-    if current_user.guild_id != "" or current_user.guild_id != None:
+    if current_user.guild_id != None:
         flash('You are already a member of a guild!', 'error')
         return render_template('homepage.html')
     return render_template('guild_templates/create_guild.html', form=form)
@@ -105,7 +105,7 @@ def join_guild(guild_id):
         flash('You have already sent a request to join this guild!', 'error')
         return redirect(url_for('guilds.open_guild', guild_id=guild_id))
     
-    if "GD-" in current_user.guild_id:
+    if current_user.guild_id:
         flash('You are already a member of a guild!', 'error')
         return redirect(url_for('guilds.open_guild', guild_id=guild_id))
     
@@ -161,6 +161,7 @@ def invite_user(guild_id):
         if user.guild_id is not None and user.guild_id != "":
             flash('User is already a member of a guild!', 'error')
             return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+        
 
         invite_id = f"INV-{random.randint(1000000, 9999999)}"
         while JoinRequest.query.filter_by(request_id=invite_id).first():
@@ -201,13 +202,12 @@ def kick_user(guild_id, user_id):
         flash('You cannot kick yourself from the guild!', 'error')
         return redirect(url_for('guilds.open_guild', guild_id=guild_id))
     
-    print("Got here!")
     user = User.query.filter_by(user_id=user_id).first_or_404()
-    if user.guild_id is None or user.guild_id == "" or user.guild_id != guild_id:
+    if user.guild_id is None or user.guild_id != guild_id:
         flash('User is not a member of this guild!', 'error')
         return redirect(url_for('guilds.open_guild', guild_id=guild_id))
     
-    user.guild_id = ""
+    user.guild_id = None
     guild.guild_members_count -= 1
     db.session.commit()
     flash(f'User {user.username} was kicked from guild successfully!', 'success')
