@@ -42,7 +42,7 @@ def latin_characters_only(form, field):
 class LoginForm(FlaskForm):
     username = StringField('Username', [DataRequired()])
     password = PasswordField('Password', [DataRequired()])
-    remember_me = BooleanField('Remember Me')
+    remember_me = BooleanField('Remember Me', validators=[Optional()])
     submit = SubmitField('Login')
 
 ########### Register Form ###########

@@ -76,7 +76,7 @@ def register():
         db.session.commit()
         send_welcome_mail(form.email.data, form.username.data)
         flash('Your account has been created! You are now able to log in.', 'success')
-        return render_template('index.html', form=form)
+        return render_template('index.html', form=LoginForm())
     else:
         if form.errors:
             for field, errors in form.errors.items():
