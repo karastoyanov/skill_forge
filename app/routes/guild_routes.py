@@ -144,9 +144,8 @@ def cancel_request(guild_id):
 @bp_guild.route('/guilds/invite_user/<guild_id>', methods=['GET', 'POST'])
 @login_required
 def invite_user(guild_id):
-    print("Got here!")
     form = InviteUserForm()
-    print("Form called!")
+    
     if form.validate_on_submit():
         user_input = form.user_input.data
         message = form.message.data

@@ -150,7 +150,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content modal_el">
                                         <div class="modal-body">
-                                            <form action="{{ url_for('guilds.invite_user', guild_id=guild_id) }}" method="POST">
+                                            <form action="{{ url_for('guilds.invite_user', guild_id=guild.guild_id) }}" method="POST">
                                                 {{ form.hidden_tag() }}
                                                 <div class="form-group">
                                                     <label for="recipient-name" class="col-form-label">User:</label>
