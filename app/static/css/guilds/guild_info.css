@@ -519,3 +519,7 @@ body {
 .member-username-remove {
     color: #2d92ff;
 }
+
+.leave_guild_btn {
+    width: 90% !important;
+}

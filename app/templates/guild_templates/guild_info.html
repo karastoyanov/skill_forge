@@ -58,6 +58,31 @@
                         </a>
                         <a href="{{ url_for('guilds.open_guilds_list') }}" class="all_guilds_button">
                             ALL GUILDS</a>
+                        {% else %}
+
+                            <!-- Leave Guild Modal -->
+                            <button type="button" class="btn btn-primary guild_master_btn leave_guild_btn" data-toggle="modal" data-target="#leaveGuildModal" data-whatever="@mdo">Leave Guild</button>
+                            <div class="modal fade" id="leaveGuildModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content modal_el">
+                                        <div class="modal-body">
+                                            <form action="{{ url_for('guilds.leave_guild', user_id=current_user.user_id, guild_id=guild.guild_id) }}" method="POST">
+                                                {{ form.hidden_tag() }}
+                                                <div class="form-group">
+                                                    <h5>Are you sure you would like to leave <span class="member-username-remove">{{ guild.guild_name }}</span>?</h5>
+                                                </div>
+                                    
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Leave</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         {% endif %}
                     </div>
                 </div>

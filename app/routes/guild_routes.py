@@ -210,7 +210,26 @@ def kick_user(guild_id, user_id):
     user.guild_id = None
     guild.guild_members_count -= 1
     db.session.commit()
+
     flash(f'User {user.username} was kicked from guild successfully!', 'success')
+    return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+
+# Leave guild; TODO: logic for masters
+@bp_guild.route('/guilds/leave/<user_id>/<guild_id>', methods=['GET', 'POST'])
+@login_required
+def leave_guild(guild_id, user_id):
+    guild = Guild.query.filter_by(guild_id=guild_id).first_or_404()
+    user = User.query.filter_by(user_id=user_id).first_or_404()
+
+    if user.guild_id is None or user.guild_id != guild_id:
+        flash('You are not a member of this guild!', 'error')
+        return redirect(url_for('guilds.open_guild', guild_id=guild_id))
+
+    user.guild_id = None
+    guild.guild_members_count -= 1
+    db.session.commit()
+
+    flash(f'You just left {guild.guild_name}!', 'success')
     return redirect(url_for('guilds.open_guild', guild_id=guild_id))
 
 # Accept or Decline join guild request - as guild master
