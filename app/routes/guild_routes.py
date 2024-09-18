@@ -257,11 +257,16 @@ def handle_join_request(request_id, guild_id, action):
         guild.members.append(user)
         db.session.commit()
 
-        # Delete all requests that the user has send to other guilds
+        # Delete all requests that the user has sent to other guilds
         user_requests = JoinRequest.query.filter_by(user_id=request.user_id, request_status='Pending').all()
         for user_request in user_requests:
             db.session.delete(user_request)
-            
+        
+        # Delete all invites that has been sent to the user
+        user_invites = JoinInvite.query.filter_by(user_id=request.user_id).all()
+        for user_invite in user_invites:
+            db.session.delete(user_invite)
+
         db.session.commit()
 
         flash(f'Request has been {new_status.lower()}! {user.username} is now member of the guild!', 'success')
