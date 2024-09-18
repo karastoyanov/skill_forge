@@ -263,7 +263,7 @@ def handle_join_request(request_id, guild_id, action):
             db.session.delete(user_request)
         
         # Delete all invites that has been sent to the user
-        user_invites = JoinInvite.query.filter_by(user_id=request.user_id).all()
+        user_invites = JoinInvite.query.filter_by(user_id=request.user_id, request_status='Pending').all()
         for user_invite in user_invites:
             db.session.delete(user_invite)
 
