@@ -252,9 +252,18 @@ def handle_join_request(request_id, guild_id, action):
         user = User.query.filter_by(user_id=request.user_id).first()
         user.guild_id = guild_id
         db.session.commit()
+
         # Add the user to the guild
         guild.members.append(user)
         db.session.commit()
+
+        # Delete all requests that the user has send to other guilds
+        user_requests = JoinRequest.query.filter_by(user_id=request.user_id, request_status='Pending').all()
+        for user_request in user_requests:
+            db.session.delete(user_request)
+            
+        db.session.commit()
+
         flash(f'Request has been {new_status.lower()}! {user.username} is now member of the guild!', 'success')
     elif action == 'decline':
         # Update the request status to 'Rejected'
