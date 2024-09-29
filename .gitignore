@@ -2,6 +2,7 @@
 .vscode/
 # Ignore venv dir
 /venv/
+/skill_forge/
 
 # Ignore docs folder
 /docs/
