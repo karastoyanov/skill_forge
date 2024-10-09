@@ -133,7 +133,10 @@ body {
     text-align: justify;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    overflow: hidden;
+}
+
+form textarea {
+    overflow-y: scroll;
 }
 
 

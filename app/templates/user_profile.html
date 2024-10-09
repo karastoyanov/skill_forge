@@ -31,11 +31,11 @@
     <div>
         <div class="container mx-auto py-8 user_profile_info">
             {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-            {% endif %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
             {% endwith %}
             <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
                 <div class="col-span-4 sm:col-span-3">
@@ -80,7 +80,7 @@
                             {{ form.about_me (class="text-gray-900 rounded-lg 
                             focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 
                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                            user_profile_info about_me_field", placeholder="Share your story or interests. What makes you unique?", rows=10) }}
+                            user_profile_info about_me_field", placeholder="Share your story or interests. What makes you unique?", rows=7) }}
                             <div class="grid gap-6 mb-6 md:grid-cols-2">
                                 <div>
                                     <label for="first_name" class="block mb-2 font-medium text-gray-900 dark:text-white">First name</label>

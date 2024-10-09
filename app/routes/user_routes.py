@@ -20,6 +20,19 @@ from app.user_permission import admin_required
 
 bp_usr = Blueprint('usr', __name__)
 
+fields_flash_messages = {
+    'about_me': 'About me',
+    'first_name': 'First name',
+    'last_name': 'Last name',
+    'email': 'Email',
+    'facebook_profile': 'Facebook profile',
+    'instagram_profile': 'Instagram profile',
+    'github_profile': 'GitHub profile',
+    'discord_id': 'Discord ID',
+    'linked_in': 'LinkedIn',
+    'avatar': 'Avatar'
+}
+
 #  Open the user profile page
 @bp_usr.route('/my_profile', methods=['GET', 'POST'])
 @login_required
@@ -77,7 +90,7 @@ def open_user_profile():
     else:
         for field, errors in form.errors.items():
             for error in errors:
-                flash(f'{field}: {error}', 'danger')
+                flash(f'{fields_flash_messages[field]}: {error}', 'danger')
                 return redirect(url_for('usr.open_user_profile'))
 
     if request.method == 'GET':
